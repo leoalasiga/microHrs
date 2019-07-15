@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: eureka-server             #服务名称自定义;
+#  security:
+#    user:
+#      name: user                    #配置BASIC认证的登录账户
+#      password: 123456              #配置BASIC认证的登录密码
+
+server:
+  port: 8761                        #指定该Eureka实例的端口
+eureka:
+  client:
+    register-with-eureka: false     #禁止注册自身
+    fetch-registry: false           #因为该服务没有注册到其他注册中心,所以关闭从注册中心拉取其他服务列表
+                                    #如果是服务注册中心集群,需要开启,开启就是去掉该配置,采用默认的即可
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 3000
+    response-cache-update-interval-ms: 3000
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    hostname: localhost
+
+ribbon:
+  ServerListRefreshInterval: 1000
